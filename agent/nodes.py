@@ -12,7 +12,7 @@ import time
 from .state import AgentState
 
 
-# ── Router node ──────────────────────────────────────────────
+#Router node
 def make_router_node(groq_client, model_name: str = "llama-3.1-8b-instant"):
     def router_node(state: AgentState) -> AgentState:
         t0 = time.time()

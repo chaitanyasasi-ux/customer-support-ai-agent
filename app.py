@@ -21,7 +21,7 @@ from agent import (
 
 st.set_page_config(
     page_title="Customer Support AI Agent",
-    page_icon="🎧",
+    page_icon="",
     layout="wide"
 )
 
