@@ -2,8 +2,7 @@
 
 A production-style agentic RAG system for customer support — built with **LangGraph**, **FAISS**, **HuggingFace embeddings**, and **Groq (Llama 3.1)**. The agent doesn't just answer questions from a knowledge base; it routes messages intelligently, classifies urgency, remembers conversation context, detects when a human needs to step in, and generates structured tickets for handoff.
 
-**[Live Demo →](#)** *(customer-support-ai-agent-nl5b9ydqfvosbmyqxds25f
-.streamlit.app)*
+[Live Demo](https://customer-support-ai-agent-nl5b9ydqfvosbmyqxds25f.streamlit.app)
 
 ---
 
