@@ -13,7 +13,7 @@ from .state import AgentState
 
 
 #Router node
-def make_router_node(groq_client, model_name: str = "llama-3.1-8b-instant"):
+def make_router_node(groq_client, model_name: str = "llama3-8b-8192"):
     def router_node(state: AgentState) -> AgentState:
         t0 = time.time()
         prompt = f"""Classify this customer support message into exactly one category.
@@ -53,7 +53,7 @@ Respond with ONLY one word: small_talk, rag_search, or escalate"""
 
 
 # ── Urgency node ──────────────────────────────────────────────
-def make_urgency_node(groq_client, model_name: str = "llama-3.1-8b-instant"):
+def make_urgency_node(groq_client, model_name: str = "llama3-8b-8192"):
     def urgency_node(state: AgentState) -> AgentState:
         t0 = time.time()
         prompt = f"""Classify the urgency of this customer support message.
@@ -117,7 +117,7 @@ def make_rag_search_node(vectorstore, k: int = 3):
 
 # ── Generation node ──────────────────────────────────────────
 def make_generation_node(groq_client, sliding_memory, full_history,
-                          model_name: str = "llama-3.1-8b-instant"):
+                          model_name: str = "llama3-8b-8192"):
     def generation_node(state: AgentState) -> AgentState:
         t0 = time.time()
         route   = state["route"]
@@ -179,8 +179,6 @@ def make_generation_node(groq_client, sliding_memory, full_history,
             )
             answer = response.choices[0].message.content.strip()
         except Exception as e:
-            import streamlit as st
-            st.sidebar.error(f"Router error: {type(e).__name__}: {str(e)}")
             route = "rag_search"
 
         state["answer"] = answer

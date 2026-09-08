@@ -22,7 +22,7 @@ def _default_summary(query: str, urgency: str) -> dict:
 
 def generate_ticket_summary(groq_client, conversation: list[dict],
                              fallback_query: str, fallback_urgency: str,
-                             model_name: str = "llama-3.1-8b-instant") -> dict:
+                             model_name: str = "llama3-8b-8192") -> dict:
     """
     conversation: list of {"user": ..., "agent": ...} turns for this session.
     fallback_query / fallback_urgency: used only if the conversation list
