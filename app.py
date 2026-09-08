@@ -42,6 +42,8 @@ def load_groq_client():
         )
         st.stop()
     return Groq(api_key=api_key)
+import os
+st.sidebar.write("Key loaded:", bool(os.environ.get("GROQ_API_KEY")))
 
 
 @st.cache_resource(show_spinner=False)
@@ -68,7 +70,7 @@ if "last_state" not in st.session_state:
     st.session_state.last_state = None
 
 
-st.title("🎧 Customer Support AI Agent")
+st.title("Customer Support AI Agent")
 st.caption(
     "Multi-tool agent: RAG knowledge base · urgency classifier · "
     "conversation memory · escalation detection · ticket summaries"

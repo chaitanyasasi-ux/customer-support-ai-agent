@@ -206,7 +206,7 @@ def make_escalation_check_node(full_history):
         if state["route"] == "escalate":
             reasons.append("Router flagged message tone as requiring escalation")
 
-        confidence = state.get("confidence")
+        confidence = state.get("confidence",0)
         if confidence is not None and confidence < 0.3:
             reasons.append(
                 f"Low retrieval confidence ({confidence}) — knowledge base may not cover this"
