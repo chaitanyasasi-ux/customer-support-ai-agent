@@ -123,6 +123,8 @@ def make_generation_node(groq_client, sliding_memory, full_history,
         route   = state["route"]
         urgency = state.get("urgency", "Medium")
 
+        answer = "I'm having trouble processing your request right now. Let me connect you to a human agent."
+
         history_block   = sliding_memory.format_for_prompt(state["session_id"])
         history_section = f"\nPrevious conversation:\n{history_block}\n" if history_block else ""
 
