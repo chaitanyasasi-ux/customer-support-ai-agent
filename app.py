@@ -8,6 +8,10 @@
 import os
 import uuid
 import streamlit as st
+import agent.nodes as _nodes
+import inspect
+_source = inspect.getsource(_nodes.make_router_node)
+st.sidebar.code(_source[:200], language="python")
 os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
 from agent import (
@@ -52,7 +56,7 @@ def load_memory_stores():
     return SlidingWindowMemory(max_turns=3), FullHistoryStore()
 
 
-@st.cache_resource(show_spinner=False)
+
 def load_agent(_groq_client, _vectorstore, _sliding_memory, _full_history):
     return build_agent_graph(_groq_client, _vectorstore, _sliding_memory, _full_history)
 
