@@ -96,9 +96,14 @@ with chat_col:
             st.write(user_input)
 
         with st.chat_message("assistant"):
-            with st.spinner("Thinking..."):
-                result = run_agent(agent, user_input, st.session_state.session_id)
-            st.write(result["answer"])
+           with st.spinner("Thinking..."):
+              try:
+               result = run_agent(agent, user_input, st.session_state.session_id)
+               st.write(result["answer"])
+              except Exception as e:
+               st.error(f"FULL ERROR: {type(e).__name__}: {str(e)}")
+               import traceback
+               st.code(traceback.format_exc())
 
         st.session_state.chat_messages.append({"role": "assistant", "content": result["answer"]})
         st.session_state.last_state = result
