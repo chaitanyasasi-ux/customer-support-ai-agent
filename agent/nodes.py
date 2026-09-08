@@ -179,9 +179,9 @@ def make_generation_node(groq_client, sliding_memory, full_history,
             )
             answer = response.choices[0].message.content.strip()
         except Exception as e:
-            answer = (
-                    f"DEBUG ERROR:{type(e).__name__}:{str(e)}"
-            )
+            import streamlit as st
+            st.sidebar.error(f"Router error: {type(e).__name__}: {str(e)}")
+            route = "rag_search"
 
         state["answer"] = answer
         state["metrics"]["generation_ms"] = round((time.time() - t0) * 1000, 1)

@@ -5,5 +5,5 @@ langchain-community
 faiss-cpu
 sentence-transformers
 datasets
-groq
+groq==1.4.0
 pandas
