@@ -178,10 +178,9 @@ def make_generation_node(groq_client, sliding_memory, full_history,
                 max_tokens=300,
             )
             answer = response.choices[0].message.content.strip()
-        except Exception:
+        except Exception as e:
             answer = (
-                "I'm having trouble processing your request right now. "
-                "Let me connect you to a human agent."
+                    f"DEBUG ERROR:{type(e).__name__}:{str(e)}"
             )
 
         state["answer"] = answer

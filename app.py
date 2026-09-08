@@ -8,6 +8,7 @@
 import os
 import uuid
 import streamlit as st
+os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
 from agent import (
     build_knowledge_base,
