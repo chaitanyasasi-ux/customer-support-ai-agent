@@ -39,10 +39,11 @@ Respond with ONLY one word: small_talk, rag_search, or escalate"""
             raw = response.choices[0].message.content.strip().lower()
             valid_routes = ["small_talk", "rag_search", "escalate"]
             route = next((r for r in valid_routes if r in raw), None) or "rag_search"
-        except Exception:
+        except Exception as e:
             # FAILURE MODE: Groq API down / rate limited. Default to
             # rag_search — a wasted search is cheaper than silently
             # ignoring a real support question.
+            print(f"Error is {e}")
             route = "rag_search"
 
         state["route"] = route
