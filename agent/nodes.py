@@ -10,6 +10,7 @@
 
 import time
 from .state import AgentState
+import streamlit as st
 
 
 
@@ -43,7 +44,7 @@ Respond with ONLY one word: small_talk, rag_search, or escalate"""
             # FAILURE MODE: Groq API down / rate limited. Default to
             # rag_search — a wasted search is cheaper than silently
             # ignoring a real support question.
-            print(f"Error is {e}")
+            st.sidebar.error(f"Router error: {type(e).__name__}: {str(e)}")
             route = "rag_search"
 
         state["route"] = route
