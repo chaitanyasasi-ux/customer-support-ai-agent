@@ -14,7 +14,7 @@ import streamlit as st
 
 
 #Router node
-def make_router_node(groq_client, model_name: str = "mixtral-8x7b-32768"):
+def make_router_node(groq_client, model_name: str = "openai/gpt-oss-120b"):
     def router_node(state: AgentState) -> AgentState:
         t0 = time.time()
         prompt = f"""Classify this customer support message into exactly one category.
@@ -55,7 +55,7 @@ Respond with ONLY one word: small_talk, rag_search, or escalate"""
 
 
 # ── Urgency node ──────────────────────────────────────────────
-def make_urgency_node(groq_client, model_name: str = "mixtral-8x7b-32768"):
+def make_urgency_node(groq_client, model_name: str = "openai/gpt-oss-120b"):
     def urgency_node(state: AgentState) -> AgentState:
         t0 = time.time()
         prompt = f"""Classify the urgency of this customer support message.
@@ -119,7 +119,7 @@ def make_rag_search_node(vectorstore, k: int = 3):
 
 # ── Generation node ──────────────────────────────────────────
 def make_generation_node(groq_client, sliding_memory, full_history,
-                          model_name: str = "mixtral-8x7b-32768"):
+                          model_name: str = "openai/gpt-oss-120b"):
     def generation_node(state: AgentState) -> AgentState:
         t0 = time.time()
         route   = state["route"]
