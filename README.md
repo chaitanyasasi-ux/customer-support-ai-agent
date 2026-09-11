@@ -1,8 +1,8 @@
 # Multi-Tool Customer Support AI Agent
 
-A production-style agentic RAG system for customer support — built with **LangGraph**, **FAISS**, **HuggingFace embeddings**, and **Groq (Llama 3.1)**. The agent doesn't just answer questions from a knowledge base; it routes messages intelligently, classifies urgency, remembers conversation context, detects when a human needs to step in, and generates structured tickets for handoff.
+A production-style agentic RAG system for customer support — built with **LangGraph**, **FAISS**, **HuggingFace embeddings**, and **Groq (mixtral-8x7b-32768)**. The agent doesn't just answer questions from a knowledge base; it routes messages intelligently, classifies urgency, remembers conversation context, detects when a human needs to step in, and generates structured tickets for handoff.
 
-[Live Demo](https://customer-support-ai-agent-nl5b9ydqfvosbmyqxds25f.streamlit.app)
+[Live Demo](https://customer-support-ai-agent-gd7rzh32jpmmxr7eebknhr.streamlit.app/)
 
 ---
 
@@ -32,7 +32,7 @@ User message
         └──────────────┬──────────────┘
                         ▼
                 ┌─────────────┐
-                │ Generation   │  (Groq llama-3.1-8b-instant,
+                │ Generation   │  (Groq llama3-8b-8192,
                 │ (+ memory)   │   reads sliding-window history)
                 └─────────────┘
                         │
@@ -65,7 +65,7 @@ User message
 
 - **Orchestration:** LangGraph (StateGraph with conditional routing)
 - **Retrieval:** FAISS + `sentence-transformers/all-MiniLM-L6-v2`
-- **Generation:** Groq API, `llama-3.1-8b-instant`
+- **Generation:** Groq API, `mixtral-8x7b-32768`
 - **UI:** Streamlit
 - **Dataset:** [Bitext Customer Support LLM Chatbot Training Dataset](https://huggingface.co/datasets/bitext/Bitext-customer-support-llm-chatbot-training-dataset) (27 intents, free, public)
 
@@ -104,7 +104,7 @@ Honest engineering means documenting tradeoffs, not just features. These are the
 
 **Knowledge base gaps are handled by retrieval confidence, not denial.** The Bitext dataset doesn't cover every possible support topic (e.g. it has no "account locked" or "return policy" intent). Rather than letting the LLM hallucinate an answer from irrelevant retrieved chunks, a confidence score (derived from FAISS distance) below 0.3 triggers an explicit instruction to the model to hedge or escalate instead of guessing.
 
-**Generator model choice was revised mid-project.** `flan-t5-large` was the original generator (free, local, no API key needed) but proved too weak at open-ended instruction-following — it frequently echoed prompts back or returned generic fallbacks even when given relevant context. Switched to Groq's `llama-3.1-8b-instant`, which is instruction-tuned and dramatically more reliable at extracting and rephrasing context, while still being free and fast (Groq's LPU hardware keeps latency under 1 second even on the free tier).
+**Generator model choice was revised mid-project.** `flan-t5-large` was the original generator (free, local, no API key needed) but proved too weak at open-ended instruction-following — it frequently echoed prompts back or returned generic fallbacks even when given relevant context. Switched to Groq's `mixtral-8x7b-32768`, which is instruction-tuned and dramatically more reliable at extracting and rephrasing context, while still being free and fast (Groq's LPU hardware keeps latency under 1 second even on the free tier).
 
 **Bitext's template placeholders required explicit cleanup.** The dataset contains unfilled variables like `{{Customer Support Hours}}` meant to be populated by a real company's backend. Left unhandled, these leaked verbatim into agent responses. A mapping of known placeholders to realistic defaults, plus a regex safety net for any unmapped pattern, ensures no broken-looking text reaches a user.
 
