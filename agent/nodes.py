@@ -13,7 +13,6 @@ from .state import AgentState
 import streamlit as st
 
 
-
 #Router node
 def make_router_node(groq_client, model_name: str = "mixtral-8x7b-32768"):
     def router_node(state: AgentState) -> AgentState:
