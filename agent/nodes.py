@@ -85,6 +85,7 @@ Respond with ONLY one word: Low, Medium, or High"""
             # Default to Medium — never assume Low (could miss a real
             # urgent issue), never assume High (over-alerts on every
             # ambiguous message, making the signal useless).
+            st.sidebar.error(f"Urgency error: {type(e).__name__}: {str(e)}")
             urgency = "Medium"
 
         state["urgency"] = urgency
@@ -183,6 +184,7 @@ def make_generation_node(groq_client, sliding_memory, full_history,
             )
             answer = response.choices[0].message.content.strip()
         except Exception as e:
+            st.sidebar.error(f"Router error: {type(e).__name__}: {str(e)}")
             route = "rag_search"
 
         state["answer"] = answer
