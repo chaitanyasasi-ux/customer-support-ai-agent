@@ -34,11 +34,30 @@ Respond with ONLY one word: small_talk, rag_search, or escalate"""
                 model=model_name,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0,
-                max_tokens=10,
+                reasoning_effort="low",
+                max_completion_tokens=128,
+                include_reasoning=False,
+
             )
+
+            st.sidebar.write("MODEL:", model_name)
+            st.sidebar.write("RAW RESPONSE:", response)
+            st.sidebar.write(
+    "CONTENT:",
+    repr(response.choices[0].message.content)
+)
+            st.sidebar.write(
+    "REASONING:",
+    repr(getattr(response.choices[0].message, "reasoning", None))
+)
             raw = response.choices[0].message.content.strip().lower()
             valid_routes = ["small_talk", "rag_search", "escalate"]
-            route = next((r for r in valid_routes if r in raw), None) or "rag_search"
+            raw = (response.choices[0].message.content or "").strip().lower()
+
+            valid_routes = {"small_talk", "rag_search", "escalate"}
+            route = raw if raw in valid_routes else None
+            if route is None:
+                 raise ValueError(f"Unexpected router output: {raw!r}")
         except Exception as e:
             # FAILURE MODE: Groq API down / rate limited. Default to
             # rag_search — a wasted search is cheaper than silently
@@ -74,13 +93,15 @@ Respond with ONLY one word: Low, Medium, or High"""
                 model=model_name,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0,
-                max_tokens=10,
+                reasoning_effort="low",
+                max_completion_tokens=128,
+                include_reasoning=False,
             )
-            raw = response.choices[0].message.content.strip()
-            valid_levels = ["Low", "Medium", "High"]
-            urgency = next(
-                (lvl for lvl in valid_levels if lvl.lower() in raw.lower()), None
-            ) or "Medium"
+            raw = (response.choices[0].message.content or "").strip().lower()
+            valid_levels = { "low": "Low","medium": "Medium","high": "High",}
+            urgency=valid_levels.get(raw)
+            if urgency is None:
+               raise ValueError(f"Unexpected router output: {raw!r}")
         except Exception:
             # Default to Medium — never assume Low (could miss a real
             # urgent issue), never assume High (over-alerts on every
