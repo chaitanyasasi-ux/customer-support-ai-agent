@@ -10,7 +10,7 @@ import uuid
 import streamlit as st
 import agent.nodes as _nodes
 import inspect
-os.environ["GROQ_DEFAULT_MODEL"] = "mixtral-8x7b-32768"
+os.environ["GROQ_DEFAULT_MODEL"] = "openai/gpt-oss-120b"
 
 from agent import (
     build_knowledge_base,
