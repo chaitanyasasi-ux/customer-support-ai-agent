@@ -38,8 +38,8 @@ def build_agent_graph(groq_client, vectorstore, sliding_memory, full_history):
         router → urgency → (conditional) → rag_search → generation → escalation_check → END
                                           ↘ generation ──────────────↗
     """
-    router_node           = make_router_node(groq_client,model_name=MODEL_NAME)
-    urgency_node           = make_urgency_node(groq_client,model_name=MODEL_NAME)
+    router_node           = make_router_node(groq_client,model_name="openai/gpt-oss-20b")
+    urgency_node           = make_urgency_node(groq_client,model_name="openai/gpt-oss-120b")
     rag_search_node        = make_rag_search_node(vectorstore)
     generation_node        = make_generation_node(groq_client, sliding_memory, full_history,model_name=MODEL_NAME)
     escalation_check_node  = make_escalation_check_node(full_history)

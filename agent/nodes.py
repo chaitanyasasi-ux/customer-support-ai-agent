@@ -14,7 +14,7 @@ import streamlit as st
 
 
 #Router node
-def make_router_node(groq_client, model_name: str = "openai/gpt-oss-120b"):
+def make_router_node(groq_client, model_name: str = "openai/gpt-oss-20b"):
     def router_node(state: AgentState) -> AgentState:
         t0 = time.time()
         prompt = f"""Classify this customer support message into exactly one category.
@@ -55,7 +55,7 @@ Respond with ONLY one word: small_talk, rag_search, or escalate"""
 
 
 # ── Urgency node ──────────────────────────────────────────────
-def make_urgency_node(groq_client, model_name: str = "openai/gpt-oss-120b"):
+def make_urgency_node(groq_client, model_name: str = "openai/gpt-oss-20b"):
     def urgency_node(state: AgentState) -> AgentState:
         t0 = time.time()
         prompt = f"""Classify the urgency of this customer support message.
